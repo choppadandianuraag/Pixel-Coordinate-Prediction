@@ -10,20 +10,21 @@ Deep learning model to predict pixel coordinates in 50x50 grayscale images with 
 ## Project Structure
 ```
 ├── images/
-│   ├── train/          # Training images
-│   ├── val/            # Validation images
-│   └── test/           # Test images
+│   ├── train/                  # Training images
+│   ├── val/                    # Validation images
+│   └── test/                   # Test images
 ├── models/
 │   └── best_pixel_model_v2.h5  # Trained model weights
 ├── notebooks/
 │   └── Model_Training.ipynb    # Main training notebook
 ├── src/
-│   └── (helper scripts if any)
+│   └── utils.py                # Helper scripts (if any)
 ├── generate_dataset.py         # Dataset generation script
 ├── main.py                     # Main execution script
-├── pixel_coordinates.csv       # Coordinate labels
+├── pixel_coordinates.csv       # Ground-truth pixel coordinates
 ├── requirements.txt            # Python dependencies
-└── README.md                   # This file
+└── README.md                   # Project documentation
+
 ```
 
 ## Installation
@@ -54,10 +55,6 @@ Run all cells sequentially to:
 3. Evaluate on test set
 4. Generate visualizations
 
-### Option 2: Using Python Script
-```bash
-python main.py
-```
 
 ### Generate New Dataset (Optional)
 ```bash

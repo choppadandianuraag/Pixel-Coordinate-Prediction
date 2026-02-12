@@ -1,4 +1,3 @@
-readme_content = """# Pixel Coordinate Prediction using CNN
 
 ## Project Overview
 Deep learning model to predict pixel coordinates in 50x50 grayscale images with sub-pixel accuracy.

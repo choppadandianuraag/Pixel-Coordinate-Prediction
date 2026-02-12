@@ -7,7 +7,7 @@ Deep learning model to predict pixel coordinates in 50x50 grayscale images with 
 - **Test Median Error**: 0.25 pixels  
 - **Accuracy**: 99.5% positional accuracy
 
-https://github.com/choppadandianuraag/Pixel-Coordinate-Prediction/blob/main/Model_Training.ipynb
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/choppadandianuraag/Pixel-Coordinate-Prediction/blob/main/Model_Training.ipynb)
 
 ## Project Structure
 ```

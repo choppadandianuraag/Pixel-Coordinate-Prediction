@@ -1,0 +1,35 @@
+gitignore_content = """# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data files (if large)
+*.h5
+*.keras
+images/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Model checkpoints (keep only best)
+models/*.h5
+!models/best_pixel_model_v2.h5
+"""
+
+with open('/mnt/user-data/outputs/.gitignore', 'w') as f:
+    f.write(gitignore_content)

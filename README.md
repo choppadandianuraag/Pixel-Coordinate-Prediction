@@ -32,13 +32,13 @@ Deep learning model to predict pixel coordinates in 50x50 grayscale images with 
 ## Installation
 
 ### Prerequisites
-- Python 3.8+
+- Python 3.9+
 - CUDA-compatible GPU (recommended)
 
 ### Setup
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/choppadandianuraag/Pixel-Coordinate-Prediction/
 cd pixel-prediction
 
 # Install dependencies

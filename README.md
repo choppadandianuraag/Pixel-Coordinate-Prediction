@@ -29,6 +29,45 @@ Deep learning model to predict pixel coordinates in 50x50 grayscale images with 
 
 ```
 
+## Dataset Generation Rationale
+
+### Problem Analysis
+The task requires predicting (x, y) coordinates of a single white pixel (value 255) in a 50x50 grayscale image.
+
+### Dataset Design Decisions
+
+1. **Image Size: 50x50 pixels**
+   - Specified in problem statement
+   - Small enough for fast training
+   - Large enough to test model's spatial understanding
+
+2. **Dataset Size: 10,000 total images**
+   - Train: 8,000 images (80%)
+   - Validation: 1,000 images (10%)
+   - Test: 1,000 images (10%)
+   - Rationale: Sufficient samples to learn spatial patterns without overfitting
+
+3. **Pixel Placement: Uniform Random Distribution**
+   - Each pixel position (x, y) has equal probability
+   - Ensures model learns all regions of the image equally
+   - Prevents bias toward center or edges
+   - Real-world scenario: pixel could appear anywhere
+
+4. **Image Format: Grayscale (single channel)**
+   - Simplifies problem - only spatial location matters
+   - Reduces model complexity
+   - Faster training and inference
+
+5. **Single Pixel Per Image**
+   - As specified in problem statement
+   - Binary classification in spatial domain
+   - Tests model's ability to localize precisely
+
+### Why This Approach Works
+- **Regression problem**: Predicting continuous (x, y) coordinates
+- **Spatial learning**: CNN learns to detect and localize the bright pixel
+- **Balanced dataset**: No class imbalance across image regions
+
 ## Installation
 
 ### Prerequisites

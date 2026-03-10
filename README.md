@@ -1,32 +1,32 @@
 
 ## Project Overview
-Deep learning model to predict pixel coordinates in 50x50 grayscale images with sub-pixel accuracy.
+Deep learning model to predict pixel coordinates in 50x50 grayscale images.
+A CNN is trained to locate the position of a single white pixel (value=255) on a black background.
 
-## Performance
-- **Test Mean Error**: 0.26 pixels
-- **Test Median Error**: 0.25 pixels  
-- **Accuracy**: 99.5% positional accuracy
+## Dataset
+- **2,500 unique images** — one for every (x, y) position in the 50×50 grid
+- **Leakage-free splits**: All positions are enumerated, shuffled, and partitioned into mutually exclusive sets:
+  - Train: 2,000 | Validation: 250 | Test: 250
+- **No duplicate images** can appear across splits (each position exists exactly once)
+- Labels are encoded in filenames (e.g., `train_00001_x14_y42.png`) to guarantee image-label alignment
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/choppadandianuraag/Pixel-Coordinate-Prediction/blob/main/Model_Training.ipynb)
 
 ## Project Structure
 ```
 ├── images/
-│   ├── train/                  # Training images
-│   ├── val/                    # Validation images
-│   └── test/                   # Test images
+│   ├── train/                  # 2,000 training images
+│   ├── val/                    # 250 validation images
+│   └── test/                   # 250 test images
 ├── models/
 │   └── best_pixel_model_v2.h5  # Trained model weights
-├── notebooks/
-│   └── Model_Training.ipynb    # Main training notebook
 ├── src/
-│   └── utils.py                # Helper scripts (if any)
-├── generate_dataset.py         # Dataset generation script
-├── main.py                     # Main execution script
-├── pixel_coordinates.csv       # Ground-truth pixel coordinates
+│   └── logs/                   # TensorBoard logs
+├── generate_dataset.py         # Leakage-free dataset generation
+├── Model_Training.ipynb        # Main training notebook
+├── pixel_coordinates.csv       # Ground-truth coordinates & split info
 ├── requirements.txt            # Python dependencies
 └── README.md                   # Project documentation
-
 ```
 
 ## Dataset Generation Rationale
@@ -71,36 +71,33 @@ The task requires predicting (x, y) coordinates of a single white pixel (value 2
 ## Installation
 
 ### Prerequisites
-- Python 3.9+
-- CUDA-compatible GPU (recommended)
+- Python 3.11+
+- macOS with Apple Silicon (tensorflow-macos) or CUDA GPU
 
 ### Setup
 ```bash
 # Clone the repository
 git clone https://github.com/choppadandianuraag/Pixel-Coordinate-Prediction/
-cd pixel-prediction
-
+cd Pixel-Coordinate-Prediction
 # Install dependencies
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-### Option 1: Using Jupyter Notebook (Recommended)
-```bash
-jupyter notebook notebooks/Model_Training.ipynb
-```
-Run all cells sequentially to:
-1. Load and preprocess data
-2. Train the CNN model  
-3. Evaluate on test set
-4. Generate visualizations
-
-
-### Generate New Dataset (Optional)
+### 1. Generate Dataset
 ```bash
 python generate_dataset.py
 ```
+This enumerates all 2,500 positions, shuffles, splits, and saves images with coordinate-encoded filenames.
+
+### 2. Train & Evaluate
+Open `Model_Training.ipynb` and run all cells sequentially to:
+1. Load images with labels parsed from filenames (no CSV dependency for alignment)
+2. Verify zero overlap between splits (leakage assertion)
+3. Train the CNN model
+4. Evaluate on the held-out test set
+5. Generate visualizations
 
 ## Model Architecture
 **Simple CNN v2** - Best performing model:
@@ -114,32 +111,18 @@ python generate_dataset.py
 - **Optimizer**: Adam (lr=0.001)
 - **Callbacks**: EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 - **Epochs**: 30 (with early stopping)
-- **Best val_loss**: 0.031
 
 ## Results
-
-### Quantitative Results
-| Metric | Value |
-|--------|-------|
-| Test MAE | 0.26 pixels |
-| Test Median Error | 0.25 pixels |
-| Max Error | <0.5 pixels |
+Retrain the model using the notebook to get fresh results on the leakage-free dataset.
 
 ### Visualizations
-See `notebooks/Model_Training.ipynb` for:
-- Training/validation loss curves
+See `Model_Training.ipynb` for:
 - Predicted vs actual scatter plots
 - Error distribution histograms
 - Sample predictions overlaid on images
-
-## Code Quality
-- ✅ PEP8 compliant
-- ✅ Comprehensive comments
-- ✅ Modular design
-- ✅ Clear documentation
+- Error vs position analysis
 
 ## Dependencies
-See `requirements.txt` for full list:
-- TensorFlow 2.15.0
-- NumPy, Pandas, Matplotlib
-- Scikit-learn
+See `requirements.txt`:
+- TensorFlow 2.15.0 (tensorflow-macos on Apple Silicon)
+- NumPy, Pandas, Matplotlib, OpenCV
